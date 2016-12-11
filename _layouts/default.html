@@ -1,0 +1,58 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+{% include head.html %}
+<body class="home-template">
+
+<section id="wrapper">
+    <div id="ajax-container">
+        <nav id="nav" class="nav">
+            <div class="nav-logo">
+                <a href="{{ site.url }}">
+                    {%if site.logo %}
+                    <img src="{{ site.logo }}" alt="Logo" />
+                    {%else %}
+                    <span class="name">{{ site.title }}</span>
+                    {% endif %}
+
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a class="rss" href="{{ site.url }}/rss/"><i class="icon-rss"></i></a>
+                {%if site.navigation %}
+                <a class="menu" data-action="menu" data-target="menu"><i class="icon-menu"></i></a>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% include header.html %}
+
+        <div id="post-index" class="container">
+            <main class="content" role="main">
+                {% include loop.html %}
+            </main>
+        </div>
+
+
+        <div id="body-class" style="display: none;" class="home-template"></div>
+
+        {% include footer.html %}
+
+        {%if site.navigation %}
+        {{site.navigation}}
+        {% endif %}
+    </div>
+</section>
+
+
+
+
+
+
+<script type="text/javascript" src="assets/js/dependencies.js"></script>
+<script type="text/javascript" src="assets/js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% if page.bg %}
+    <header class="header has-cover" style="background-image: url({{ site.url }}{{ site.images }}/{{ page.bg }})">
+        <div class="inner">
+            <a class="header-title" href="{{ site.url }}">
+                <h1 class="header-name">{{site.title}}</h1>
+                {% if site.description %}
+                    <span class="header-description">{{site.description}}</span>
+                {% endif %}
+            </a>
+        </div>
+    </header>
+{% else %}
+    <header class="header" style="background-image: url({{ site.url }}{{ site.images }}/bg.svg)">
+        <div class="inner">
+            <a class="header-title" href="{{ site.url }}">
+                <h1 class="header-name">{{site.title}}</h1>
+                {% if site.description %}
+                <span class="header-description">{{site.description}}</span>
+                {% endif %}
+            </a>
+        </div>
+    </header>
+{% endif %}
