@@ -3,7 +3,8 @@ layout: post
 title:  "Another post"
 date:   2016-12-10 15:31:52 +0200
 categories: jekyll update
-image: "assets/images/tools.jpg"
+image: "tools.jpg"
+cover: "tools.jpg"
 ---
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam scelerisque dui eget lectus lobortis, non eleifend lectus molestie. Maecenas eget mi egestas urna tincidunt pulvinar. Cras suscipit, augue ac tincidunt ullamcorper, ante nunc condimentum lorem, id malesuada mi sapien ut urna. Suspendisse a velit lacinia, bibendum purus sed, sollicitudin est. Fusce tincidunt turpis a bibendum semper. Fusce maximus id magna quis elementum. Sed et blandit dui. Aenean ut diam ac est hendrerit pellentesque rhoncus et augue. Cras consequat dapibus ante eleifend semper. Cras interdum nibh a leo facilisis, sit amet tempor ipsum accumsan. Nulla mollis egestas eros, et viverra nisl aliquet ut. Nulla suscipit ut erat dapibus tincidunt. In eu accumsan felis.
 

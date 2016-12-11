@@ -1,5 +1,5 @@
-{% if page.bg %}
-    <header class="header has-cover" style="background-image: url({{ site.url }}{{ site.images }}/{{ page.bg }})">
+{% if page.cover %}
+    <header class="header has-cover">
         <div class="inner">
             <a class="header-title" href="{{ site.url }}">
 
@@ -28,7 +28,7 @@
             </div>
         </div>
         {% if site.cover %}
-            <div class="header-cover" style="background-image: url({{ site.url }}{{ site.images }}/{{ site.cover }})"></div>
+            <div class="header-cover" style="background-image: url({{ site.url }}{{ site.images }}/{{ page.cover }})"></div>
         {% endif %}
     </header>
 {% else %}

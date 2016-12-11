@@ -1,0 +1,11 @@
+<header id="header" class="header{%if page.cover %} has-cover{% endif %}">
+  <div class="inner">
+    <a class="header-title" href="#">
+      <h1 class="header-name">{{page.title}}</h1>
+      <span class="header-description ">{{page.date | date: "%d.%m.%Y"}}</span>
+    </a>
+  </div>
+  {%if page.cover %}
+  <div class="header-cover" style="background-image: url({{site.url}}/assets/images/{{page.cover}})"></div>
+  {% endif %}
+</header>
