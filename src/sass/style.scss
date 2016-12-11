@@ -883,6 +883,34 @@ body {
 		}
 	}
 
+	.social-media {
+		padding-top: 0.2em;
+		margin: auto;
+		width: 100%;
+		font-family: 'Helvetica Neue', sans-serif;
+		display: block;
+		text-align: center;
+		color: #fff;
+		position: relative;
+
+		a {
+			color: #fff;
+		}
+
+		a:visited {
+			color: #fff;
+		}
+
+		a:hover {
+			color: $color-gray-65;
+		}
+
+		.fa {
+			letter-spacing: 2px;
+			color: inherit;
+		}
+	}
+
 	&.has-cover {
 
 		.header-name {
@@ -922,8 +950,8 @@ body {
 
 
 	.header-image {
-		width: 3em;
-		height: 3em;
+		width: 5em;
+		height: 5em;
 		margin: -1em auto 1em;
 		overflow: hidden;
 		border-radius: 3em;
