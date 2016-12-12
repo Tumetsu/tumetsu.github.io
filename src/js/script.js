@@ -41,25 +41,6 @@ jQuery(function($) {
 		}
 	});
 
-	/* ==========================================================================
-	   Current Menu Item
-	   ========================================================================== */
-
-	/*
-		Actually this should be handled by GHost itself, but the {{current}} handler doesn't
-		work as aspected everytime so I add this little FUnction to fix this on the client side.
-	*/
-
-	function currentMenuFix() {
-		$('.menu-list-item a').each(function() {
-			var link = $(this);
-			link.removeClass('current');
-			if(link.attr('href') == window.location.href) {
-				link.addClass('current');
-			}
-		});
-	}
-	currentMenuFix();
 
 	/* ==========================================================================
 	   Masonry
@@ -86,24 +67,6 @@ jQuery(function($) {
 		});
 	}
 	grid();
-
-	/* ==========================================================================
-	   Run Highlight
-	   ========================================================================== */
-
-	function highlight() {
-		$('pre code').each(function(i, e) {
-			hljs.highlightBlock(e);
-			var code = $(this);
-			var lines = code.html().split(/\n/).length;
-			var numbers = [];
-			for (i = 1; i < lines; i++) {
-				numbers += '<span class="line">' + i + '</span>';
-			}
-			code.parent().addClass('codeblock').append('<div class="lines">' + numbers + '</div>');
-		});
-	}
-	highlight();
 
 	/* ==========================================================================
 	   Fitvids
@@ -145,40 +108,14 @@ jQuery(function($) {
 	comments();
 
 	/* ==========================================================================
-	   Reading Time
-	   ========================================================================== */
-
-	function readingTime() {
-		// Don't execute on the front page
-		if (location.pathname === '/') {
-			return;
-		}
-
-		var post = body.find('article');
-		var postReadingTime = post.find('.post-reading-time');
-
-		post.readingTime({
-			readingTimeTarget: postReadingTime.find('.estimated-reading-time'),
-			wordCountTarget: postReadingTime.find('.word-count'),
-			error: function () {
-				postReadingTime.find('.post-reading-time').remove();
-			}
-		});
-	}
-	readingTime();
-
-	/* ==========================================================================
 	   Reload all scripts after AJAX load
 	   ========================================================================== */
 
 	function reload() {
 		grid();
 		ajaxLinkClass();
-		highlight();
 		video();
 		comments();
-		currentMenuFix();
-		readingTime();
 	}
 
 	/* ==========================================================================
@@ -258,7 +195,7 @@ jQuery(function($) {
 		});
 	});
 	$('body').on('click', '.js-ajax-link', function(e) {
-	    e.preventDefault();
+		e.preventDefault();
 
 		var link = $(this);
 
@@ -276,18 +213,18 @@ jQuery(function($) {
 			html.removeClass('pushed-prev');
 		}
 
-	    if (loading === false) {
+		if (loading === false) {
 			var currentState = History.getState();
 			var url = $(this).prop('href');
 			var title = $(this).attr('title') || null;
 
-	        if (url.replace(/\/$/, "") !== currentState.url.replace(/\/$/, "")) {
+			if (url.replace(/\/$/, "") !== currentState.url.replace(/\/$/, "")) {
 				loading = true;
 				html.addClass('loading');
 				NProgress.start();
 				History.pushState({}, title, url);
-	        }
-	    }
+			}
+		}
 	});
 
 	$('body').on('click', '#post-index .post .js-ajax-link', function() {

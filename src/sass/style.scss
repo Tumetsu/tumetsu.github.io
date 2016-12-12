@@ -1357,7 +1357,7 @@ body {
 			position: relative;
 			margin: -2em -2em 0;
 			overflow: hidden;
-			background: $color-primary-default;
+			//background: $color-primary-default; // disabled for now since caused ugly horizontal lines on Chrome with certain zoom levels.
 
 			@media only screen and (max-width: $breakpoint-tablet) {
 				margin: -1em -1em 0;

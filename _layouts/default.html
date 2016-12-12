@@ -4,7 +4,7 @@ layout: compress
 <!DOCTYPE html>
 <html lang="{{ site.lang }}">
 {% include head.html %}
-<body class="home-template">
+<body>
 
 <section id="wrapper">
   <div id="ajax-container">
@@ -20,8 +20,10 @@ layout: compress
         </a>
       </div>
       <div class="nav-menu">
-        <a class="rss" href="{{ site.url }}/rss/"><i class="icon-rss"></i></a>
-        {%if site.navigation %}
+        {% if site.rss %}
+        <a class="rss" href="{{ site.rss }}"><i class="icon-rss"></i></a>
+        {% endif %}
+        {% if site.navigation %}
         <a class="menu" data-action="menu" data-target="menu"><i class="icon-menu"></i></a>
         {% endif %}
       </div>
@@ -33,9 +35,8 @@ layout: compress
     <div id="body-class" style="display: none;" class="home-template"></div>
 
     {% include footer.html %}
-
-    {%if site.navigation %}
-    {{site.navigation}}
+    {% if site.navigation %}
+      {% include navigation.html %}
     {% endif %}
   </div>
 </section>
