@@ -1,9 +1,14 @@
+var moment = require('moment');
+var changeCase = require('change-case')
+
 module.exports = function(grunt) {
     'use strict';
     require('load-grunt-tasks')(grunt, {
         pattern: ['grunt-*']
     });
 
+    grunt.loadNpmTasks('grunt-template');
+    grunt.loadNpmTasks('grunt-prompt');
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         config: {
@@ -152,8 +157,72 @@ module.exports = function(grunt) {
                 files: '<%=  config.jsSrcDir %>/**/*.js',
                 tasks: ['uglify:devlight']
             }
+        },
+
+        prompt: {
+            target: {
+                options: {
+                    questions: [
+                        {
+                            config: 'template.process-markdown-template.options.data.title', // arbitrary name or config for any other grunt task
+                            type: 'input', // list, checkbox, confirm, input, password
+                            message: 'Post name', // Question to ask the user, function needs to return a string,
+                            default: 'new post' // default value if nothing is entered
+                        },
+                        {
+                            config: 'template.process-markdown-template.options.data.date', // arbitrary name or config for any other grunt task
+                            type: 'input', // list, checkbox, confirm, input, password
+                            message: 'Date', // Question to ask the user, function needs to return a string,
+                            default: moment().toISOString() // default value if nothing is entered
+                        },
+                        {
+                            config: 'template.process-markdown-template.options.data.categories', // arbitrary name or config for any other grunt task
+                            type: 'input', // list, checkbox, confirm, input, password
+                            message: 'Categories', // Question to ask the user, function needs to return a string,
+                            default: '' // default value if nothing is entered
+                        },
+                        {
+                            config: 'template.process-markdown-template.options.data.image', // arbitrary name or config for any other grunt task
+                            type: 'input', // list, checkbox, confirm, input, password
+                            message: 'Image', // Question to ask the user, function needs to return a string,
+                            default: null // default value if nothing is entered
+                        },
+                        {
+                            config: 'template.process-markdown-template.options.data.cover', // arbitrary name or config for any other grunt task
+                            type: 'input', // list, checkbox, confirm, input, password
+                            message: 'Cover image', // Question to ask the user, function needs to return a string,
+                            default: null // default value if nothing is entered
+                        }
+                    ]
+                }
+            }
+        },
+
+        template: {
+            'process-markdown-template': {
+                'options': {
+                    'data': {
+                        'title': 'My blog post',
+                        'date': 'Mathias Bynens',
+                        'categories': '',
+                        'image': 'Lorem ipsum dolor sit amet.',
+                        'cover': 'Lorem ipsum dolor sit amet.',
+                        'fileName': function () {
+                            return moment(grunt.task.current.data.options.data.date).format('YYYY-MM-DD-') + changeCase.paramCase(grunt.task.current.data.options.data.title);
+                        }
+                    }
+                },
+                'files': {
+                    '_posts/<%= grunt.task.current.data.options.data.fileName() %>.markdown': ['src/post.tpl.md']
+                }
+            }
         }
     });
+
+    grunt.registerTask('new-post', [
+        'prompt',
+        'template:process-markdown-template'
+    ]);
 
     grunt.registerTask('build', [
 	    'clean:dist',
