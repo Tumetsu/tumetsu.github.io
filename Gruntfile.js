@@ -36,12 +36,12 @@ module.exports = function(grunt) {
 	        dev: {
                 files: [{
 	                dest: 'assets/fonts/',
-	                src: '*',
+	                src: '**/*',
                     cwd: 'src/fonts/',
                     expand: true
                 }, {
                     dest: 'assets/images/',
-                    src: '*',
+                    src: '**/*',
                     cwd: 'src/images/',
                     expand: true
                 }]
@@ -49,12 +49,12 @@ module.exports = function(grunt) {
 	        dist: {
                 files: [{
 	                dest: 'assets/fonts/',
-	                src: '*',
+	                src: '**/*',
                     cwd: 'src/fonts/',
                     expand: true
                 }, {
                     dest: 'assets/images/',
-                    src: '*',
+                    src: '**/*',
                     cwd: 'src/images/',
                     expand: true
                 }]

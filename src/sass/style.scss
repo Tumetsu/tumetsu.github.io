@@ -1109,7 +1109,6 @@ body {
 .post {
 	position: relative;
 	z-index: 20;
-	margin-top: 5em;
 
 	.post-image {
 		display: block;
@@ -1357,7 +1356,7 @@ body {
 			position: relative;
 			margin: -2em -2em 0;
 			overflow: hidden;
-			//background: $color-primary-default; // disabled for now since caused ugly horizontal lines on Chrome with certain zoom levels.
+			background: $color-primary-default;
 
 			@media only screen and (max-width: $breakpoint-tablet) {
 				margin: -1em -1em 0;
