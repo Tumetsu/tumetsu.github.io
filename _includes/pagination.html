@@ -1,11 +1,11 @@
 <nav id="pagination" class="pagination" role="pagination">
   <div class="inner">
     {% if paginator.previous_page %}
-    <a class="pagination-item pagination-next" href="{{ paginator.previous_page_path }}"><i class="icon-arrow-left"></i> <span>Newer Posts</span></a>
+    <a class="pagination-item pagination-next" href="{{ paginator.previous_page_path }}/"><i class="icon-arrow-left"></i> <span>Newer Posts</span></a>
     {% endif %}
     <span class="pagination-info">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
     {% if paginator.next_page %}
-    <a class="pagination-item pagination-prev" href="{{ paginator.next_page_path }}"><span>Older Posts</span> <i class="icon-arrow-right"></i></a>
+    <a class="pagination-item pagination-prev" href="{{ paginator.next_page_path }}/"><span>Older Posts</span> <i class="icon-arrow-right"></i></a>
     {% endif %}
     <div class="clear"></div>
   </div>

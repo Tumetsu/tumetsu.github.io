@@ -123,7 +123,6 @@ jQuery(function($) {
 	   ========================================================================== */
 
 	function ajaxLinkClass() {
-
 		$('a[href^="' + window.location.origin + '"], .post-image a, .post-title a, .post-more a, .post-meta a, .post-tags a, #pagination a').each(function() {
 			var link = $(this);
 
@@ -147,8 +146,10 @@ jQuery(function($) {
 				}
 			}
 		});
+
 	}
 	ajaxLinkClass();
+
 
 	/* ==========================================================================
 	   Ajax Loading
@@ -217,7 +218,6 @@ jQuery(function($) {
 			var currentState = History.getState();
 			var url = $(this).prop('href');
 			var title = $(this).attr('title') || null;
-
 			if (url.replace(/\/$/, "") !== currentState.url.replace(/\/$/, "")) {
 				loading = true;
 				html.addClass('loading');
