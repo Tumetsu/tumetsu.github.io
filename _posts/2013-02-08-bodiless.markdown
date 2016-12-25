@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "Bodiless"
+date:   2013-02-08
+categories: games
+image: "/covers/bodilessfeature.jpg"
+
+---
+
+Bodiless is a clever platformer where the main character has no body. Only hands, feet and head. Player can use these to move on the ledges, and advance with ways otherwise impossible. [Bodiless was also featured on Indiegames.com by John Polson](http://indiegames.com/2013/02/why_didnt_rayman_think_of_this.html)
+
+The original concept is from 2006 and took a few iterations until I managed to finish it properly. Even now it went through some mishaps but ultimately was good enough to warrant a release.
+
+[Play in Newgrounds](http://www.newgrounds.com/portal/view/610731)

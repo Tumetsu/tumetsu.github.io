@@ -37,6 +37,9 @@ collections:
 
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 theme: minima
 paginate: 8
 #paginate_path: "/blog/page:num/"

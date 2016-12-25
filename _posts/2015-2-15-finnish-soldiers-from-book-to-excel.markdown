@@ -7,10 +7,9 @@ image: "covers/soldier.jpg"
 cover: "covers/soldier.jpg"
 ---
 
-[![Extraction process](http://i.imgur.com/Obp8gM8.jpg)](http://i.imgur.com/Obp8gM8.jpg)Extraction process
-
 This is a Python software which lets user to convert *Suomen Rintamamiehet 1939-43* matrikel books to a csv-format. The book series was originally published in 1970s and they contain brief descriptions of the soldiers, their life, children, spouses etc. This data is scientifically interesting but difficult to analyze statistically in a written format.
 
+[![Extraction process](http://i.imgur.com/Obp8gM8.jpg)](http://i.imgur.com/Obp8gM8.jpg)Extraction process
 
 ## What does this tool do?
 
