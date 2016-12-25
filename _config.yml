@@ -20,7 +20,7 @@ description: >
 cover: "covers/cliffs.jpg"
 portrait: "portrait.png"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://www.tuomassalmi.com" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://www.tuomassalmi.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: tumetsu
 github_username:  tumetsu
 linkedin_url: https://fi.linkedin.com/in/salmituomas
