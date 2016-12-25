@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 	        } 
         },
         clean: {
-            dist: ['assets']
+            dist: ['assets/fonts', 'assets/css', 'assets/js']
         },
         sass: {
             dev: {
