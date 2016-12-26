@@ -202,11 +202,11 @@ module.exports = function(grunt) {
             'process-markdown-template': {
                 'options': {
                     'data': {
-                        'title': 'My blog post',
-                        'date': 'Mathias Bynens',
+                        'title': '',
+                        'date': '',
                         'categories': '',
-                        'thumb': 'Lorem ipsum dolor sit amet.',
-                        'cover': 'Lorem ipsum dolor sit amet.',
+                        'thumb': '',
+                        'cover': '',
                         'fileName': function () {
                             return moment(grunt.task.current.data.options.data.date).format('YYYY-MM-DD-') + changeCase.paramCase(grunt.task.current.data.options.data.title);
                         }
