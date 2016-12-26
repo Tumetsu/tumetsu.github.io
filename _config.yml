@@ -23,7 +23,7 @@ meta_description: Tuomas Salmi, home page. Art, games and software.
 cover: "covers/cliffs.jpg"
 portrait: "portrait.png"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://tuomassalmi.com" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://tumetsu.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Social details. Both for SEO and elements in layout
 twitter:
