@@ -3,7 +3,7 @@ layout: post
 title:  "Quick colors"
 date:   2013-02-05
 categories: games
-image: "/covers/quickcolorfeature.jpg"
+thumb: "quickcolorfeature.jpg"
 
 ---
 

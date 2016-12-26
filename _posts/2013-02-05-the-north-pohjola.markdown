@@ -3,7 +3,7 @@ layout: post
 title:  "The North, Pohjola"
 date:   2013-02-05
 categories: games
-image: "/post-images/northfeature.jpg"
+thumb: "northfeature.jpg"
 cover: "/post-images/northsnap1.jpg"
 featured: true
 ---

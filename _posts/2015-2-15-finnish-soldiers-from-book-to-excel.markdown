@@ -3,7 +3,7 @@ layout: post
 title:  "Finnish Soldiers from book to Excel"
 date:   2015-2-15 15:31:52 +0200
 categories: science software python
-image: "covers/soldier.jpg"
+thumb: "soldier.jpg"
 cover: "covers/soldier.jpg"
 ---
 

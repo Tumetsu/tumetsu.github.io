@@ -182,9 +182,9 @@ module.exports = function(grunt) {
                             default: '' // default value if nothing is entered
                         },
                         {
-                            config: 'template.process-markdown-template.options.data.image', // arbitrary name or config for any other grunt task
+                            config: 'template.process-markdown-template.options.data.thumb', // arbitrary name or config for any other grunt task
                             type: 'input', // list, checkbox, confirm, input, password
-                            message: 'Image', // Question to ask the user, function needs to return a string,
+                            message: 'Thumb image', // Question to ask the user, function needs to return a string,
                             default: null // default value if nothing is entered
                         },
                         {
@@ -205,7 +205,7 @@ module.exports = function(grunt) {
                         'title': 'My blog post',
                         'date': 'Mathias Bynens',
                         'categories': '',
-                        'image': 'Lorem ipsum dolor sit amet.',
+                        'thumb': 'Lorem ipsum dolor sit amet.',
                         'cover': 'Lorem ipsum dolor sit amet.',
                         'fileName': function () {
                             return moment(grunt.task.current.data.options.data.date).format('YYYY-MM-DD-') + changeCase.paramCase(grunt.task.current.data.options.data.title);

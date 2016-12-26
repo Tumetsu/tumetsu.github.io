@@ -3,8 +3,7 @@ layout: post
 title:  "Tampere Machines Game"
 date:   2013-03-06
 categories: games
-image: "post-images/tampere-machines-feature.jpg"
-
+thumb: "tampere-machines-feature.jpg"
 ---
 
 Tampere Machines Game was a game project I worked on the Spring 2013. The goal of the project was to develop a game for three companies [Cargotec](http://www.cargotec.fi/), [Sandvik](http://www.miningandconstruction.sandvik.com/) and [John Deere](http://www.deere.fi/) to be used on their collaboration project.

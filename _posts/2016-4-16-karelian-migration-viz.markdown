@@ -3,7 +3,7 @@ layout: post
 title:  "Karelian migration visualization 1912 - 1966"
 date:   2016-4-16 15:31:52 +0200
 categories: science visualization data
-image: "covers/migrationmap.jpg"
+thumb: "migrationmap.jpg"
 cover: "covers/migrationmap.jpg"
 featured: true
 ---

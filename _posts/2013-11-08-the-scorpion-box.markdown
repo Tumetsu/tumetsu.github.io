@@ -4,7 +4,7 @@ title:  "The Scorpion Box"
 date:   2013-11-08
 categories: games
 cover: "/post-images/room.jpg"
-image: "/covers/scorpionbox1.jpg"
+thumb: "scorpionbox1.jpg"
 featured: true
 ---
 

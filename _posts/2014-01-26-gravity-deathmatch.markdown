@@ -3,7 +3,7 @@ layout: post
 title:  "Gravity Deathmatch"
 date:   2014-01-26
 categories: games
-image: "/covers/gravitydeath.jpg"
+thumb: "gravitydeath.jpg"
 ---
 
 Gravity Deathmatch was developed as a part of Global Game Jam (or Finnish Game Jam) in Tampere. It is a two player game where one player controls the human and other controls the alien character. Goal of the game is to try kill other player while jumping around in a asteroid octagon and changing the gravity with your projectile. We think it turned out rather fun.

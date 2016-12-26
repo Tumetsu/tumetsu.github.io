@@ -3,7 +3,7 @@ layout: post
 title:  "Bodiless"
 date:   2013-02-08
 categories: games
-image: "/covers/bodilessfeature.jpg"
+thumb: "bodilessfeature.jpg"
 
 ---
 

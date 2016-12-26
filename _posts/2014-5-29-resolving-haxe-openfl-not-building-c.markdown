@@ -3,7 +3,7 @@ layout: post
 title:  "Resolving Haxe - OpenFL not building for C++ targets"
 date:   2014-5-29 15:31:52 +0200
 categories: guide c++ haxe
-image: "covers/haxe-logo.png"
+thumb: "haxe-logo.png"
 cover: "covers/haxe-logo.png"
 ---
 

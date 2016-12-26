@@ -3,7 +3,7 @@ layout: post
 title:  "Beat from Above"
 date:   2013-02-07
 categories: games
-image: "/covers/beatabovefeature.jpg"
+thumb: "beatabovefeature.jpg"
 
 ---
 

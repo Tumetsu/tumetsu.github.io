@@ -3,7 +3,7 @@ layout: post
 title:  "For the Medicine"
 date:   2013-02-07
 categories: games
-image: "post-images/ftm1.jpg"
+thumb: "ftm1.jpg"
 cover: "post-images/ftm1.jpg"
 featured: true
 ---

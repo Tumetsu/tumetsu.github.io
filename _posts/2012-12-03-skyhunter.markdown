@@ -3,7 +3,7 @@ layout: post
 title:  "Skyhunter"
 date:   2012-12-03
 categories: games
-image: "/covers/skyhunter.jpg"
+thumb: "skyhunter.jpg"
 
 ---
 

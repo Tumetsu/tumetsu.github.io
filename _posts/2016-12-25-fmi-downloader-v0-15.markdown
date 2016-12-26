@@ -3,7 +3,7 @@ layout: post
 title:  "FMI Downloader v0.15"
 date:   2016-12-25T15:45:31.527Z
 categories: software
-image: "covers/thunder-clouds.jpg"
+thumb: "thunder-clouds.jpg"
 cover: "covers/thunder-clouds.jpg"
 ---
 

@@ -6,9 +6,9 @@
         <article class="post {% if post.featured %}featured{% endif %}">
             <div class="inner">
                 <a class="post-link" href="{{ post.url }}"></a>
-                {% if post.image %}
+                {% if post.thumb %}
                 <figure class="post-image">
-                    <a href="{{ post.url }}"><img src="{{ site.url }}/assets/images/{{ post.image }}" alt="" /></a>
+                    <a href="{{ post.url }}"><img src="{{ site.url }}/assets/images/thumbs/{{ post.thumb }}" alt="" /></a>
                 </figure>
                 {% endif %}
                 <span class="post-meta">

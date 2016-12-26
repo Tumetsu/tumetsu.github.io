@@ -3,7 +3,7 @@ layout: post
 title:  "Acrylic experiments"
 date:   2016-4-16 15:31:52 +0200
 categories: art painting acrylic
-image: "covers/bear.jpg"
+thumb: "bear.jpg"
 cover: "covers/bear.jpg"
 ---
 Some of my irregular experiments with acrylic colors from last years.

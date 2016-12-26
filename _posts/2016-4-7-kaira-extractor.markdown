@@ -3,7 +3,7 @@ layout: post
 title:  "Kaira extractor"
 date:   2016-4-16 15:31:52 +0200
 categories: science software python
-image: "covers/karelians.jpg"
+thumb: "karelians.jpg"
 cover: "covers/karelians.jpg"
 ---
 

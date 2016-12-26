@@ -3,7 +3,7 @@ layout: post
 title:  "How to get Finland&#x27;s map to geoJSON and display it in D3js"
 date:   2014-03-14
 categories: guide data visualization d3js
-image: "covers/finland.png"
+thumb: "finland.png"
 cover: "covers/finland.png"
 ---
 
