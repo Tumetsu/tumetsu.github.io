@@ -55,14 +55,14 @@ jQuery(function($) {
 					'padding-bottom' : 100 / img.width() * img.height() + '%'
 				});
 			});
-	    });
+		});
 		var postlist = $('.post-list').masonry({
 			itemSelector			: '.post',
 			isAnimated				: false,
 			gutter					: 0,
 			columnWidth				: 1,
 			transitionDuration		: 0
-		}).imagesLoaded().always(function() {
+		}).imagesLoaded().progress(function() {
 			postlist.masonry('layout');
 		});
 	}
