@@ -41,7 +41,7 @@ To get your new variant to show up in the desktop's keyboard selection GUI, you 
 to the evdev.xml:
 
 ```
-vim /usr/share/X11/xkb/keycodes/evdev.xml
+vim /usr/share/X11/xkb/rules/evdev.xml
 
  <variant>
    <configItem>
