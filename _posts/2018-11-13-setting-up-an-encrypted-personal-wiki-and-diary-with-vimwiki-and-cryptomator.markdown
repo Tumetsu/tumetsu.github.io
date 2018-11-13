@@ -6,8 +6,6 @@ categories: vim wiki
 
 
 ---
-# Setting up encrypted personal wiki and diary with Vimwiki and Cryptomator 
-
 Multiple times in my life I have tried to keep a diary or log of my life and thoughts. 
 Usually this has failed by me not writing entries regularly. Part of the reason has been the lack of 
 good tools for the task. Most distributed diary software are subscription based and store the data in a proprietary 
