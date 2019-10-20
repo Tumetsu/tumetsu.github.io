@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Tuomas Salmi]]></title><description><![CDATA[Homepage]]></description><link>https://www.tuomassalmi.com</link><generator>RSS for Node</generator><lastBuildDate>Sun, 20 Oct 2019 14:13:36 GMT</lastBuildDate><item><title><![CDATA[Setting up an encrypted personal wiki and diary with Vimwiki and Cryptomator]]></title><description><![CDATA[I have tried multiple times in my life to keep a diary or log of my life and thoughts. 
+Usually this has failed by me not writing entries…]]></description><link>https://www.tuomassalmi.com/tech/personal-wiki/</link><guid isPermaLink="false">https://www.tuomassalmi.com/tech/personal-wiki/</guid><pubDate>Tue, 13 Nov 2018 19:27:40 GMT</pubDate><content:encoded>&lt;p&gt;I have tried multiple times in my life to keep a diary or log of my life and thoughts.
+Usually this has failed by me not writing entries regularly. Part of the reason has been the lack of
+good tools for the task. Most distributed diary software are subscription based and store the data in a proprietary
+or otherwise difficult file format. &lt;/p&gt;
+&lt;p&gt;These problems led me to few requirements for my diary needs:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Text editor should be powerful and easy to use.&lt;/li&gt;
+&lt;li&gt;The content should be saved in plain text format so that I can be sure it is readable in far future.&lt;/li&gt;
+&lt;li&gt;The content should be secured by encryption.&lt;/li&gt;
+&lt;li&gt;The tool should be free and not depend on a specific service.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Vimwiki&lt;/h2&gt;
+&lt;p&gt;Sometime ago I found about &lt;em&gt;&lt;a href=&quot;https://github.com/vimwiki/vimwiki&quot;&gt;VimWiki&lt;/a&gt;&lt;/em&gt; which is a Vim plugin for personal wiki and diary. The plugin adds shortcuts to
+create and organize files to a wikilike structure with interconnected wikiarticles and easy link and page generation.
+You can read introduction to the Vimwiki from these great blog posts: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.smoothterminal.com/articles/vimwiki&quot;&gt;Vimwiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.mague.com/?p=602&quot;&gt;Getting started with VimWiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I prefer using &lt;em&gt;Vim&lt;/em&gt; for most of my everyday text editing tasks so &lt;em&gt;Vimwiki&lt;/em&gt; obviously solved the number 1. of my
+requirements. The plugin also fills the second requirement since the whole wiki is just a directory of plain text files.
+The plugin and &lt;em&gt;Vim&lt;/em&gt; itself are also free and open source tools so the requirement 4 is no problem either.&lt;/p&gt;
+&lt;p&gt;The remaining issues are the encryption and the sharing of the wiki between my multiple PCs. My immediate thought
+was to share the wiki via Dropbox. However, first I had to figure out how to encrypt the wiki before uploading it to the cloud service like Dropbox. &lt;/p&gt;
+&lt;h2&gt;Cryptomator&lt;/h2&gt;
+&lt;p&gt;I evaluated some file based encryption options. I wanted something which could encrypt individual files so that
+Dropbox could sync them efficiently.
+There are well known Unix tools suchs as &lt;em&gt;&lt;a href=&quot;https://wiki.archlinux.org/index.php/EncFS&quot;&gt;EncFs&lt;/a&gt;&lt;/em&gt; and &lt;em&gt;&lt;a href=&quot;https://wiki.archlinux.org/index.php/ECryptfs&quot;&gt;EcryptFs&lt;/a&gt;&lt;/em&gt; for this kind of tasks.
+After a brief evaluation it seemed like &lt;em&gt;EncFs&lt;/em&gt; is not actively developed and has some invulnerabilities and
+&lt;em&gt;EcryptFs&lt;/em&gt; seemed a bit difficult to use and is not really cross-platform.&lt;/p&gt;
+&lt;p&gt;The best option I could find so far was the open source application &lt;em&gt;&lt;a href=&quot;https://cryptomator.org&quot;&gt;Cryptomator&lt;/a&gt;&lt;/em&gt;
+which is designed for encrypting files for cloud services like Dropbox.
+Cryptomator supports Windows, Linux, MacOS and in some degree mobile platforms so it seemed ideal for my purposes.&lt;/p&gt;
+&lt;h2&gt;Setup Vimwiki with Cryptomator&lt;/h2&gt;
+&lt;p&gt;First you obviously need to install Vim, Vimwiki and Cryptomator. This guide also
+assumes you are using Unix based platform, be it Linux, MacOS or something else.&lt;/p&gt;
+&lt;h3&gt;.vimrc&lt;/h3&gt;
+&lt;p&gt;By default Vim creates &lt;em&gt;.swp&lt;/em&gt; files to the same directory where the edited file is located. Normally this is fine
+but if these files are saved to the Vimwiki directory, they are synced to the cloud and will then cause trouble when
+you edit the file with another PC.&lt;/p&gt;
+&lt;p&gt;I decided to add the following line to my .vimrc to save the swap-files to a single location:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&amp;quot; Aggregate all vim swap files to a one place
+set directory^=$HOME/.vim/swapfiles//&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Make sure this does not cause any problems with your specific environment.
+Make also sure to first create the &lt;em&gt;swapfiles&lt;/em&gt; directory to your &lt;em&gt;.vim/&lt;/em&gt; directory!&lt;/p&gt;
+&lt;h3&gt;Cryptomator setup&lt;/h3&gt;
+&lt;p&gt;First you should create a new Cryptomator vault which is located inside your
+cloud synced directory. The instructions to the vault creation can be found from the
+&lt;a href=&quot;https://community.cryptomator.org/t/english-desktop-user-manual/30&quot;&gt;Cryptomator’s user guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After creating the new vault, unlock and open it in your file manager.
+Take note of the file path of the vault. For example in my case it is &lt;em&gt;/home/tuomas/.Cryptomator/wiki2vKBC3-TQebG/&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;By default &lt;em&gt;Vimwiki&lt;/em&gt; creates &lt;em&gt;vimwiki&lt;/em&gt; directory to your home directory and &lt;em&gt;vimwiki&lt;/em&gt;html_ for HTML-version of your wiki.
+These directories have to be moved to our secured Cryptomator vault, so first move them to the path you noted before. &lt;/p&gt;
+&lt;p&gt;Then create symlinks from your home directory to your vault:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;ln -s /path/to/your/vault/vimwiki ~/vimwiki
+ln -s /path/to/your/vault/vimwiki_html ~/vimwiki_html&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now your wiki files are actually located in the encrypted vault in your cloud synced directory. Before accessing the
+files you always have to unlock your vault. Once the vault is unlocked, you can use &lt;em&gt;Vimwiki&lt;/em&gt; normally.&lt;/p&gt;
+&lt;h2&gt;Final notes&lt;/h2&gt;
+&lt;p&gt;So far I’m satisfied with described setup. The Cryptomator could be better and I would prefer a production ready
+CLI interface but it does its job well enough.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Vimwiki&lt;/em&gt; itself and its diary features seem really good in the brief time I have used them regularly.
+The idea of a diary and a personal wiki fascinate me as powerful tools to organize my knowledge but only time
+will tell if they actually work as I hope they will.&lt;/p&gt;
+&lt;p&gt;Cover image by Jan Kahánek on Unsplash&lt;/p&gt;</content:encoded></item><item><title><![CDATA[How to add custom keyboard variant in Ubuntu 18.04]]></title><description><![CDATA[Recently I had to reinstall my Ubuntu and noticed I hadn’t documented how to setup my custom keyboard layout. 
+It took some time to figure…]]></description><link>https://www.tuomassalmi.com/tech/custom-keyboard-variant/</link><guid isPermaLink="false">https://www.tuomassalmi.com/tech/custom-keyboard-variant/</guid><pubDate>Fri, 28 Sep 2018 11:23:27 GMT</pubDate><content:encoded>&lt;p&gt;Recently I had to reinstall my Ubuntu and noticed I hadn’t documented how to setup my custom keyboard layout.
+It took some time to figure it out so I decided to document it here for posteriority.
+This should work on Ubuntu 18.04.&lt;/p&gt;
+&lt;h3&gt;1. Customize your keyboard symbols&lt;/h3&gt;
+&lt;p&gt;You should have a custom keyboard symbol definitions. In my case I wanted to replace the default Finnish
+symbols to add a new keyboard variant called &lt;em&gt;sensible braces&lt;/em&gt;. So
+add a new variant to the default symbols file:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;vim  /usr/share/X11/xkb/symbols/fi
+
+partial alphanumeric_keys
+xkb_symbols &amp;quot;sensiblebraces&amp;quot; {
+
+    // Classic Finnish keyboard layout without dead keys and {[]} on asdf + AltGr
+
+    include &amp;quot;fi(nodeadkeys)&amp;quot;
+
+    name[Group1]=&amp;quot;Finnish (classic, no dead keys, sensible braces)&amp;quot;;
+
+    key &amp;lt;AC01&amp;gt; { [  a,               A,                braceleft,             SCHWA                 ] };
+    key &amp;lt;AC02&amp;gt; { [  s,               S,                bracketleft,           Scaron                ] };
+    key &amp;lt;AC03&amp;gt; { [  d,               D,                bracketright,          ETH                   ] };
+    key &amp;lt;AC04&amp;gt; { [  f,               F,                braceright,            F                     ] };
+};&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case I change the asdf to act as {[]} with Alt Gr as modifier. This setup makes those characters easier to
+reach on Scandinavian keyboards.&lt;/p&gt;
+&lt;h3&gt;2. Add the new variant to the evdev.xml&lt;/h3&gt;
+&lt;p&gt;To get your new variant to show up in the desktop’s keyboard selection GUI, you have to add the variant
+to the evdev.xml:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;vim /usr/share/X11/xkb/rules/evdev.xml
+
+ &amp;lt;variant&amp;gt;
+   &amp;lt;configItem&amp;gt;
+     &amp;lt;name&amp;gt;sensiblebraces&amp;lt;/name&amp;gt;
+     &amp;lt;description&amp;gt;Finnish (classic, no dead keys, sensible braces)&amp;lt;/description&amp;gt;
+   &amp;lt;/configItem&amp;gt;
+ &amp;lt;/variant&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Make sure to add the variant inside the correct layout definition!&lt;/p&gt;
+&lt;h3&gt;3. Select the new layout&lt;/h3&gt;
+&lt;p&gt;Simply select the new layout from the GUI keyboard layout menu. If it does not appear, try logging out first.&lt;/p&gt;
+&lt;p&gt;Cover Photo by Shahadat Shemul on Unsplash&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Acrylic experiments]]></title><description><![CDATA[Some of my irregular experiments with acrylic colors from past few years.]]></description><link>https://www.tuomassalmi.com/art/2016-4-6-acrylic-experiments.markdown/</link><guid isPermaLink="false">https://www.tuomassalmi.com/art/2016-4-6-acrylic-experiments.markdown/</guid><pubDate>Sat, 16 Apr 2016 13:31:52 GMT</pubDate><content:encoded>&lt;p&gt;Some of my irregular experiments with acrylic colors from past few years.&lt;/p&gt;
+&lt;img style=&quot;max-width: 100%;&quot; src=&quot;http://img07.deviantart.net/2531/i/2016/052/9/d/magpie_by_tumetsu-d9sk9xu.jpg&quot;&gt;
+&lt;img style=&quot;max-width: 100%&quot; src=&quot;http://img14.deviantart.net/a2b7/i/2015/305/f/2/mountain_view_with_bob_by_tumetsu-d9f69p9.jpg&quot;&gt;
+&lt;img style=&quot;max-width: 100%;&quot; src=&quot;http://img00.deviantart.net/d927/i/2014/323/3/8/seal_by_tumetsu-d86yvi2.jpg&quot;&gt;
+&lt;img style=&quot;max-width: 100%;&quot; src=&quot;http://img08.deviantart.net/b1c7/i/2014/201/8/3/a_fox_by_tumetsu-d7rgyii.jpg&quot;&gt;
+&lt;img style=&quot;max-width: 100%;&quot; src=&quot;http://img12.deviantart.net/08c0/i/2014/200/5/5/the_bear_by_tumetsu-d7rcpq7.jpg&quot;&gt;</content:encoded></item><item><title><![CDATA[Kaira extractor]]></title><description><![CDATA[Year ago I was working on Lammi Biological Station on various tasks. One of the most interesting ones was a project to extract data from old…]]></description><link>https://www.tuomassalmi.com/programming/kaira-extractor/</link><guid isPermaLink="false">https://www.tuomassalmi.com/programming/kaira-extractor/</guid><pubDate>Sat, 16 Apr 2016 13:31:52 GMT</pubDate><content:encoded>&lt;p&gt;Year ago I was working on Lammi Biological Station on various tasks. One of the most interesting ones was a project to extract data from old matrikel books into digitized Excel compatible format. Resulting data set was supposed to be used in statistical research. The project began from trying to extract the data of Finnish Winter War soldiers from a book series &lt;em&gt;Suomen Rintamamiehet 1939-43&lt;/em&gt;. &lt;a href=&quot;/finnish-soldiers-from-book-to-excel/&quot;&gt;You can find earlier description of the project from another blog post&lt;/a&gt;. After a considerable success with soldier data we decided to extend it to other matrikel series and develop a software I later named as &lt;strong&gt;Kaira&lt;/strong&gt;.&lt;/p&gt;
+&lt;h4&gt;So what are these matrikels any way?&lt;/h4&gt;
+&lt;p&gt;For whatever reason in past there has been a trend in Finland to catalogue information of groups of people in different book series. They were done by interviewing people and then compiling huge books containing short descriptions of people’s life stories with varying information. Most of the series we worked on were from 70’s. Below are series included into &lt;em&gt;Kaira&lt;/em&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Suomen Rintamamiehet 1939-43&lt;/li&gt;
+&lt;li&gt;Suomen Pienviljelijät&lt;/li&gt;
+&lt;li&gt;Siirtokarjalaisten tie&lt;/li&gt;
+&lt;li&gt;Suuret maatilat&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Since these book series contain a lot of data of certain interesting groups of people, such as people who migrated from Karelia during the wars, they represent potential data for research. Problem was that this data was in natural language in a old books. Luckily John Loehr, researcher from Lammi Biological Station had already scanned multiple books into pdfs which let me to extract the text from them for analyzing.&lt;/p&gt;
+&lt;h4&gt;What is Kaira?&lt;/h4&gt;
+&lt;p&gt;Kaira is a tool I developed to read scanned text from a fore mentioned book series and extract as much of the data as possible automatically. In addition of extraction features, Kaira also provides simple interface to manually edit and improve the data before exporting it to csv or json formats.&lt;/p&gt;
+&lt;h4&gt;So how is the data extracted?&lt;/h4&gt;
+&lt;p&gt;First raw text files were converted into xml-file with each person’s data separated into tag. This conversion was done with regex-patterns and using &lt;em&gt;ABBYY Finereader&lt;/em&gt;’s html-export which produced good enough structure to find the relevant text from books.&lt;/p&gt;
+&lt;p&gt;Matrikels were mostly written in a very structured way with information presented mostly in same order in each person’s entry. This made it possible to use regular expressions to extract most of the data. For example text entry might read something like:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AHONEN, Lauri Olavi. Synt. 12.3.1907, Alajärvi. Pso. Helena o.s. Metsälä, synt. 25.8.1912.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In this case there is man’s name first, then his birthdate and place. Finally there is his spouses name, original surname and birthdate. Since most of the text was written in this way, &lt;em&gt;Kaira&lt;/em&gt; was designed to be essentially a regular expression framework, which during the extraction tracks the location of the extraction in data entry. Some data, for example dates, were easy to extract as a pattern, but the birth location was identifiable only by position in text (after birth date).&lt;/p&gt;
+&lt;p&gt;Kaira’s design is mostly a pipeline of extractor classes with custom rules for each data piece tracking their location in the text. Required regexes were developed by inspecting the source text and identifying patterns of data.&lt;/p&gt;
+&lt;p&gt;Below is an illustration of this process:
+&lt;img style=&quot;max-width:100%&quot; src=&quot;http://i.imgur.com/Obp8gM8.jpg=100x&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;User interface&lt;/h3&gt;
+&lt;p&gt;During the development I noticed that it was hopeless to produce a perfect extraction results automatically. Often authors had deviated from their text patterns during writing breaking the regex-formulas or OCR had mistaken some of the vital words in text making them unrecognizable by software.&lt;/p&gt;
+&lt;p&gt;Answer was to develop a GUI in &lt;em&gt;PyQt5&lt;/em&gt; for end user to view the extracted data and perform some simple fixing actions on it:&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 1139px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/90c12b198c10b8c99129dcf1bfebf59c/d0591/kaira-screenshot.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 64.26690079016682%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAIAAAAmMtkJAAAACXBIWXMAAAsSAAALEgHS3X78AAACJElEQVQoz1VS2ZKbMBDk/78lx2NSeUtVqrIP2TVeg8EGxCEEQiBxmVOAdrC3ks3UlDQImp5ujfbriHQbH2y8rxbWL/Hh/niwIt2KDCc1Pfp/ZoZLjxfypDsa9iPPQwlJeMFZSjNK62qPnBU4yVjVsrItmu6RedmUorzdumEYacY01/NPryfOi7qpcRQZhnl1HN8POBeui/JCTLNclVq2bVNqmEY4V/fIAIxQcDZMIYRcZJIkx+OrZdlhhJu6icJwmib1IRa5DIN81JQyzfOC44uOMYbvAHy9XEOICPd933Udy7J3/E6stnVc1mhVsVKk4EjzUGBbdlVW4zimKUXIp1nWtk3btvM84wjPs7xjd7CUvGq+yO3Hpr6L6vfObJyMwPe7rk+T5HDQTfPsIZ8LMfR9UfAH7L6oeVqa+l1IVbe7YcbrKcYxMNM0Bc22bWMc13UtpQyDcOiHv8zrKsb507R8XdVnXv7UHBfpzy/IQ7fbLY7J+Wy5rsfyHNoehj5n+YPnAR7HocgpGAf/qWoBmkPTMGhKQWGapq7jXi4XHwXgP1hFEzpN8z/mrZOLuW5npc5lZe9tm4YJQwL2EkJA8/Of5+vVKctKzlOMwbD5g2FVzr/J7Umpp7LW97aNE2jG4DCJia4f7zPDQUVT11DA3cp5j2VZ+m4sWLctu5BSNBqhDAYNJomXFewxSUkCU8pYwWEPMSEJ9J5BDaeQ+xvBRVXGJHkD1JTMGElqFOYAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kaira screenshot&quot;
+        title=&quot;kaira screenshot&quot;
+        src=&quot;/static/90c12b198c10b8c99129dcf1bfebf59c/d0591/kaira-screenshot.png&quot;
+        srcset=&quot;/static/90c12b198c10b8c99129dcf1bfebf59c/bc34b/kaira-screenshot.png 293w,
+/static/90c12b198c10b8c99129dcf1bfebf59c/da9f0/kaira-screenshot.png 585w,
+/static/90c12b198c10b8c99129dcf1bfebf59c/d0591/kaira-screenshot.png 1139w&quot;
+        sizes=&quot;(max-width: 1139px) 100vw, 1139px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;In picture, on left there is a list of every person in a one book. Center column includes data entries of three different persons in the book to be edited manually and compare to the extracted results on right column. On last column UI shows extracted data from current entry with coloring fields to yellow or red it considers missing or erroneous. User can improve the analyzer by editing the original text in middle column or inserting data to fields on right manually.&lt;/p&gt;
+&lt;h4&gt;Location data&lt;/h4&gt;
+&lt;p&gt;Some of the books had location names attached to people. Books about migrating Karelians had lists of their living places with years they spent there. I quickly noticed that I could add GPS-coordinates using these names and a location name database. After some search I found a huge data set of Finnish location names and their GPS coordinates. I added them to a MongoDB which is then queried everytime extractor encounters a place name. This produced interesting geographical material about the migration patterns. Coordinates were added to the extraction results when they were found.&lt;/p&gt;
+&lt;h4&gt;Exporting&lt;/h4&gt;
+&lt;p&gt;After data is analyzed, it is saved into xml-file to be analyzed later again by &lt;em&gt;Kaira&lt;/em&gt;. For other uses each book series has a csv-export and json-export which transform the data into more useful formats for post processing.&lt;/p&gt;
+&lt;h4&gt;Used technologies&lt;/h4&gt;
+&lt;p&gt;Software was written in Python using MongoDB as a location database and PyQt5 as gui-library.&lt;/p&gt;
+&lt;h4&gt;What could be improved&lt;/h4&gt;
+&lt;p&gt;Later I finally got around studying relational databases and nowadays I think that I should have designed a SQLite database to save the extraction results instead of using XML-file for that. SQLite export would lead to few interesting applications such as easy querying and perhaps a web-interface.&lt;/p&gt;
+&lt;p&gt;User interface and editing features was developed rather late in the project and I had to learn PyQt well enough. Due this it’s lacking many useful features and could be vastly improved in every regard.&lt;/p&gt;
+&lt;p&gt;Finally since the project was rather complicated and evolved organically, I didn’t have a full architecture designed explicitly. There is some sub-optimal design decisions and strange parts in code. I also wish I had known about a proper unit testing since it would have helped a lot during the development.&lt;/p&gt;
+&lt;h4&gt;End result&lt;/h4&gt;
+&lt;p&gt;In the end I’m happy about how Kaira turned out regardless of its flaws. It was really intriguing and challenging to design and I was happy to design the algorithms and extraction patterns.&lt;/p&gt;
+&lt;h4&gt;Availability&lt;/h4&gt;
+&lt;p&gt;Kaira and user manual are available on my &lt;a href=&quot;https://github.com/Tumetsu/Kaira&quot;&gt;Github profile&lt;/a&gt;. Required data sets and scanned texts are not public but in case you need them for research, you can contact me or &lt;a href=&quot;http://www.helsinki.fi/lammi/henkilot/hkunta.html&quot;&gt;John Loehr&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Cover image from &lt;a href=&quot;sa-kuva.fi&quot;&gt;SA-kuva&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Karelian migration visualization 1912 - 1966]]></title><description><![CDATA[Based on data produced by Kaira below is a really simple heatmap visualization of migration rates to locations in every year 1912-1966 as…]]></description><link>https://www.tuomassalmi.com/programming/karelian-migration-viz/</link><guid isPermaLink="false">https://www.tuomassalmi.com/programming/karelian-migration-viz/</guid><pubDate>Sat, 16 Apr 2016 13:31:52 GMT</pubDate><content:encoded>&lt;p&gt;Based on data produced by &lt;a href=&quot;/kaira-extractor/&quot;&gt;Kaira&lt;/a&gt; below is a really simple heatmap visualization of &lt;strong&gt;migration rates to locations&lt;/strong&gt; in every year 1912-1966 as was catalogued in &lt;em&gt;Siirtokarjalaisten tie&lt;/em&gt; books series. When winter war broke in 1939, there was a huge migration to Finland. After winter war a similar migration is seen back to Karelia. When Continuation War began, final migration wave is seen back to Finland.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://tumetsu.github.io/siirtokarjalaiset-visualization/&quot;&gt;Link to fullscreen visualization&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Finnish Soldiers from book to Excel]]></title><description><![CDATA[This is a Python software which lets user to convert Suomen Rintamamiehet 1939-43 matrikel books to a csv-format. The book series was…]]></description><link>https://www.tuomassalmi.com/programming/finnish-soldiers-from-book-to-excel/</link><guid isPermaLink="false">https://www.tuomassalmi.com/programming/finnish-soldiers-from-book-to-excel/</guid><pubDate>Sun, 15 Feb 2015 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This is a Python software which lets user to convert &lt;em&gt;Suomen Rintamamiehet 1939-43&lt;/em&gt; matrikel books to a csv-format. The book series was originally published in 1970s and they contain brief descriptions of the soldiers, their life, children, spouses etc. This data is scientifically interesting but difficult to analyze statistically in a written format.&lt;/p&gt;
+&lt;img style=&quot;max-width:100%&quot; src=&quot;http://i.imgur.com/Obp8gM8.jpg=100x&quot;&gt;
+&lt;h2&gt;What does this tool do?&lt;/h2&gt;
+&lt;p&gt;At the moment it lets the user to extract most of the interesting information from a subset of soldier matrikels to a csv-format. This data can then be used for statistical analysis.&lt;/p&gt;
+&lt;h2&gt;How does it work?&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;First you need a digital scan of the book. Preferably as good quality as possible.&lt;/li&gt;
+&lt;li&gt;Run an OCR for the scanned documents to get the raw text in a simple .txt format. Picking up a good OCR-software and settings is a bit trial and error. We used Adobe’s and will be using &lt;em&gt;ABBYY Finereader&lt;/em&gt; because of the good support for Finnish language.&lt;/li&gt;
+&lt;li&gt; Next a “chunker” is run for the raw text-file which tries to isolate every one person entry to a separate XML-tag for easy processing. This is done with a regex which looks for patterns common in beginning of the one soldier’s entry. It works most of the time but might make mistakes which has to be fixed in the fixer-tool (more about that below).&lt;/li&gt;
+&lt;li&gt;Actual extractor software reads the resulting XML-file and runs multiple tailored regexes and other domain-specific logic to generate a csv-file containing the data. At this point user can use built in fixing-tool to find missing information, edit the xml-file to fix the extraction errors and rerun the process.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Fixing tool&lt;/h2&gt;
+&lt;p&gt;When writing this the fixing-tool (can be found from GUI-tools) is &lt;em&gt;really&lt;/em&gt; crude. Basically it is cobbled together from some Tkinter examples so that I could easily test and see the data and possible errors. There will be a much better fixing tool with actually working and usable GUI in future!&lt;/p&gt;
+&lt;h2&gt;Usage&lt;/h2&gt;
+&lt;p&gt;Since this software only works for the certain book-series you obviously need them for the source-data. There is short sample XML file provided with anonymized data to test the program. To run the project, I recommend opening it in the Pycharm and running &lt;strong&gt;GUITool/processDialog.py&lt;/strong&gt; which first generates the csv and then opens fixing-tool to show data on the missing data (and simple tools to fix them).&lt;/p&gt;
+&lt;p&gt;You’ll need the Python packages described in &lt;em&gt;requirements.txt&lt;/em&gt; file as well as Python 2.7.8.&lt;/p&gt;
+&lt;h2&gt;Code&lt;/h2&gt;
+&lt;p&gt;For those interested in checking the sourcecode, I suggest starting from either &lt;em&gt;processData.py&lt;/em&gt; or &lt;em&gt;dataExtraction.py&lt;/em&gt;. The software basically reads provided XML-file one node at a time and run multiple extractor-classes for each and saves the data to be saved in the csv.&lt;/p&gt;
+&lt;h4&gt;Style and architecture&lt;/h4&gt;
+&lt;p&gt;The software was initially supposed to extract only couple pieces of information. However, the requirements expanded over time resulting to an architecture which wasn’t planned well ahead of time. This combined with high need to know the domain-specific information (getting familiar with the source text, patterns…) may make it difficult to understand certain design choices.&lt;/p&gt;
+&lt;p&gt;As for style, since I have been the only programmer in this project, the naming conventions remind more of Java (which I like) than PEP8-conventions. I might rename everything in a more Pythonic way in future.&lt;/p&gt;
+&lt;h2&gt;Future&lt;/h2&gt;
+&lt;p&gt;The software is not yet ready. The fixing-tool will need to be rewritten and there are still stuff which needs to be refactored. Later there will also be extractors for other similar books but they’ll likely be rewritten by using some of the components from this codebase. Ideally I’d like the fixing-tool to be compatible with different extractors.&lt;/p&gt;
+&lt;h5&gt;&lt;a href=&quot;https://github.com/Tumetsu/finnish-soldiers-matrikel-extractor&quot;&gt;Download and see the source on Github&lt;/a&gt;&lt;/h5&gt;
+&lt;p&gt;I’ll also probably write another post about the development and problems I encountered once I have more time.&lt;/p&gt;
+&lt;p&gt;Cover image from &lt;a href=&quot;sa-kuva.fi&quot;&gt;SA-kuva&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Gravity Deathmatch]]></title><description><![CDATA[Gravity Deathmatch was developed as a part of Global Game Jam (or Finnish Game Jam) in Tampere. It is a two player game where one player…]]></description><link>https://www.tuomassalmi.com/games/gravity-deathmatch/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/gravity-deathmatch/</guid><pubDate>Sun, 26 Jan 2014 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Gravity Deathmatch was developed as a part of Global Game Jam (or Finnish Game Jam) in Tampere. It is a two player game where one player controls the human and other controls the alien character. Goal of the game is to try kill other player while jumping around in a asteroid octagon and changing the gravity with your projectile. We think it turned out rather fun.&lt;/p&gt;
+&lt;p&gt;Game was made in Unity with 2d tools. I did the background graphics and most of the GUI coding, as well as some other small tasks. Character animations and logo were done by Ilkka Taurinen while main programming was divided between Timo Kellomäki, Antton Hytönen and Esko Vankka. A separate awesome music and sound team made the music and sounds for the game, so many thanks to Jonne Kokkonen and Konstamikko Korhonen!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://globalgamejam.org/2014/games/gravity-deathmatch&quot;&gt;GGJ Page of the game&lt;/a&gt;&lt;/p&gt;
+
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 75.07462686567165%; position: relative; height: 0; overflow: hidden;margin-bottom: 1rem&quot;
+          &gt;
+            &lt;iframe allowfullscreen frameborder=&quot;0&quot; src=&quot;https://www.youtube.com/embed/bOQ00bD84x4?feature=oembed&quot; style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          </content:encoded></item><item><title><![CDATA[The Scorpion Box]]></title><description><![CDATA[You promised to take care of your friend’s turtle while she is away. However, you got drunk and your other friend put an extremely dangerous…]]></description><link>https://www.tuomassalmi.com/games/the-scorpion-box/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/the-scorpion-box/</guid><pubDate>Fri, 08 Nov 2013 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;You promised to take care of your friend’s turtle while she is away. However, you got drunk and your other friend put an extremely dangerous scorpion in the turtle’s box. Your friend is returning soon so you have to find a way to get the scorpion out without killing the turtle or yourself.&lt;/p&gt;
+&lt;p&gt;ScorpionBox is a short point &amp;#x26; click adventure featuring multiple ways to solve the problem and several different ways to die. Check if you can find them all!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.newgrounds.com/portal/view/628194&quot;&gt;Play in Newgrounds&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://gamejolt.com/games/puzzle/the-scorpion-box/18986/&quot;&gt;Play in GameJolt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.kongregate.com/games/Tumetsu/the-scorpion-box&quot;&gt;Play in Kongregate&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Also featured kindly in&lt;/strong&gt;
+&lt;a href=&quot;http://www.pcgamer.com/2013/11/10/the-free-webgame-round-up-56/&quot;&gt;PCGamer’s The free Webgame Round-up&lt;/a&gt;
+&lt;a href=&quot;http://jayisgames.com/archives/2013/11/the_scorpion_box.php&quot;&gt;Jayisgames&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 800px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/ad176435e2a96c8d1a55bf22a431d762/0ae04/room.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAD/8QAFgEBAQEAAAAAAAAAAAAAAAAAAQAC/9oADAMBAAIQAxAAAAE2ckiyrL//xAAaEAACAgMAAAAAAAAAAAAAAAABAgMRABBC/9oACAEBAAEFApGSg16QAy9FRn//xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAgBAwEBPwFX/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAIAQIBAT8BR//EABoQAAICAwAAAAAAAAAAAAAAAAABAhARIcH/2gAIAQEABj8CSWjtSyKv/8QAGhABAAIDAQAAAAAAAAAAAAAAAQAREDFxIf/aAAgBAQABPyHcsbYniuYUAGIcoxup/9oADAMBAAIAAwAAABAzL//EABYRAAMAAAAAAAAAAAAAAAAAAAEQIf/aAAgBAwEBPxAxP//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oACAECAQE/EIt//8QAHRABAQACAgMBAAAAAAAAAAAAAREAMSFhQVFxkf/aAAgBAQABPxCfRRJXwXj7f3AQm1eQU9TDWG4hUE7M0rRnWU7m7jM//9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;room&quot;
+        title=&quot;room&quot;
+        src=&quot;/static/ad176435e2a96c8d1a55bf22a431d762/0ae04/room.jpg&quot;
+        srcset=&quot;/static/ad176435e2a96c8d1a55bf22a431d762/e33f8/room.jpg 293w,
+/static/ad176435e2a96c8d1a55bf22a431d762/d5ce0/room.jpg 585w,
+/static/ad176435e2a96c8d1a55bf22a431d762/0ae04/room.jpg 800w&quot;
+        sizes=&quot;(max-width: 800px) 100vw, 800px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 800px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/3dd012a3003bbc7e8426780e0beac8ab/0ae04/holes.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMEBf/EABUBAQEAAAAAAAAAAAAAAAAAAAIB/9oADAMBAAIQAxAAAAHn2wjaoiv/xAAaEAACAwEBAAAAAAAAAAAAAAAAAQIREhAT/9oACAEBAAEFAoxTXnEqjTNPn//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oACAEDAQE/AVf/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAgBAgEBPwFH/8QAGBAAAwEBAAAAAAAAAAAAAAAAABAxATL/2gAIAQEABj8ChzipV//EABkQAQEBAQEBAAAAAAAAAAAAAAEAESFRYf/aAAgBAQABPyF6pexZhIHNsVyfdC+3/9oADAMBAAIAAwAAABD8P//EABYRAQEBAAAAAAAAAAAAAAAAAAABMf/aAAgBAwEBPxC6h//EABYRAQEBAAAAAAAAAAAAAAAAAAABMf/aAAgBAgEBPxCYp//EABoQAQADAQEBAAAAAAAAAAAAAAEAESFBUXH/2gAIAQEAAT8QVQnXyVdZ7EOgLCBRAvk1kq1V37P/2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;holes&quot;
+        title=&quot;holes&quot;
+        src=&quot;/static/3dd012a3003bbc7e8426780e0beac8ab/0ae04/holes.jpg&quot;
+        srcset=&quot;/static/3dd012a3003bbc7e8426780e0beac8ab/e33f8/holes.jpg 293w,
+/static/3dd012a3003bbc7e8426780e0beac8ab/d5ce0/holes.jpg 585w,
+/static/3dd012a3003bbc7e8426780e0beac8ab/0ae04/holes.jpg 800w&quot;
+        sizes=&quot;(max-width: 800px) 100vw, 800px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Bodiless]]></title><description><![CDATA[Bodiless is a clever platformer where the main character has no body. Only hands, feet and head. Player can use these to move on the ledges…]]></description><link>https://www.tuomassalmi.com/games/bodiless/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/bodiless/</guid><pubDate>Fri, 08 Feb 2013 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Bodiless is a clever platformer where the main character has no body. Only hands, feet and head. Player can use these to move on the ledges, and advance with ways otherwise impossible. &lt;a href=&quot;http://indiegames.com/2013/02/why_didnt_rayman_think_of_this.html&quot;&gt;Bodiless was also featured on Indiegames.com by John Polson&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The original concept is from 2006 and took a few iterations until I managed to finish it properly. Even now it went through some mishaps but ultimately was good enough to warrant a release.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.newgrounds.com/portal/view/610731&quot;&gt;Play in Newgrounds&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Tampere Machines Game]]></title><description><![CDATA[Tampere Machines Game was a game project I worked on the Spring 2013. The goal of the project was to develop a game for three companies…]]></description><link>https://www.tuomassalmi.com/games/tampere-machines-game/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/tampere-machines-game/</guid><pubDate>Fri, 08 Feb 2013 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Tampere Machines Game was a game project I worked on the Spring 2013. The goal of the project was to develop a game for three companies &lt;a href=&quot;http://www.cargotec.fi/&quot;&gt;Cargotec&lt;/a&gt;, &lt;a href=&quot;http://www.miningandconstruction.sandvik.com/&quot;&gt;Sandvik&lt;/a&gt; and &lt;a href=&quot;http://www.deere.fi/&quot;&gt;John Deere&lt;/a&gt; to be used on their collaboration project.&lt;/p&gt;
+&lt;p&gt;The idea was to use a simple tablet game to get people familiar with each other and companies in a quick and funny way. The project was one of the&lt;a href=&quot;http://demola.fi/&quot;&gt; Demola Spring projects 2013&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 400px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/c69b64e2965b7cee6298538133e0e7c4/b3879/tampere-machines.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 93.75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAAAsSAAALEgHS3X78AAAEkElEQVQ4y4WUWWwbRRzGl+sFkJBAiCaNs3YcnCbrY727Xu/hI3YO2zlI4uA4l5M4tR33TI9UqugD5YlXeKwKiZoDVFVAq1IllKQKrUSLWgpIUUVIwyFBn1qoxEvbXe/H2D3UqpEY6dP+d3bnN998M7sUtUEDQM18ufJssV6+/Ef0w7krF3btPXQmszW9kMvlFrLZ7BMq9o2MpBcm9h9coK5evUzNz89TFy99RZ09u0idvzBPfXN+iTr4wbnnisBjp37KZ97/Dha7H2+8/irKyzejrKzsSZWXo3zza+gdDIKqrWOKTp6SXX77hSJw8uQPmbFDp+Bxeu+Y6Qq9qsqqWywW3UxkeaBin4nerEei9Tr1f+3rlbupiQPH0exgNQKEmTbDStOoMdOgzWaYS7LAXFWGvlQjqKMfHTkyls/PThzYPj22LTu9a3dmevuOndOZTG5mz77cxzsn3vl2z/53kUz0Fro6O2CrqiJQGtUEVAKSCYhLsuRyNDX7QeXzeYPjefgDfkieFggeBfUhF4JhFrKgoMHNw8W5DMZuR1c8DpvNBltFBSpLMPqRQ6t5E97qDIMaHR295XS5Ch4vr6lCWFNERRNlVlN9ohZiQ1rYW18QJQ84jkc83mVssb2pW2j6fo5mi05clmqruULvTpIM89vyt4uz+/yiIXgEBEUFQW89JLeEiNwANwGpPgG8IBjt7W2oqbaCJg4tlSbQJhNsdCVo4tREb0JygDhMp0dvOxwOeETJYN0s6vkQVIYH7xXhZWUIvEBikIziO/0DA//G492L0ebIUk+iZ2k4lVoaTQ0tpUfSi5FY4zmS+fdUNpe9TZYMSRUMiROg8ixEbxHCI0DcCh4RkswXik5H0iN/Ll9c3vrJF3OZz+ZPZGY+nyGa3frpybnslR+vDJEP4hVqLD/2N8MwhuqTdK8k6ZIs6rIi6yQ3PaD4DS+vQFZFuN2c0dndCSUmQ455EWj3gWtgYfczYENOpHeMAAYqqeHh4XsOp5MM4BGNRsluB6EoKqKxGJwOFuFgzCg+szMOJJI9BqPUag6F0RxqncZIdZqVr7pHuyqMlp7ITeLQRB1+7/AlchyuDaYSK8nevpW+vu6Vvv7elf7+3mt9g4k7rR1t6Eq0Gh3xDqRGB+EOusDItbCrDBxyDbigs2DhK9HUHf6nBNzox/Dg+uJAvv9nlgDUmFxQIhL4EAe7woALuMEH3ajz1cKhMgXaaYK/1bcx8DHwS73p5OoWsQYOxV5wqU4IAR4OyQ5PSICvWYGP5OkJcYVqzopoInIfeOPGX9Ta2hr12+/XqfX1dWpt/ZdnHgLjqa7Vat4KIcgXvA0i5DBx6XPDH/VBbpTgDYkIxgIFu8wgPti1scPV66uPgMP5oWt8gIPSpNxVmxVNavBqBKTJTVKpLt03SfdYvwvtybbiplQ8BVz7de0RMLMrc6OxswGtPS2IxJsRjUfQkoiROlJSjNTtPW1QIypSucECGUM/Bbx56+bDDJ8/debk0NFjR/dNzU7tnpqbGp+anRyfnJkcf7w+fuL4+PTc9N7TZ07nyZiX/wP8bGMuORYXHQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;tampere machines&quot;
+        title=&quot;tampere machines&quot;
+        src=&quot;/static/c69b64e2965b7cee6298538133e0e7c4/b3879/tampere-machines.png&quot;
+        srcset=&quot;/static/c69b64e2965b7cee6298538133e0e7c4/bc34b/tampere-machines.png 293w,
+/static/c69b64e2965b7cee6298538133e0e7c4/b3879/tampere-machines.png 400w&quot;
+        sizes=&quot;(max-width: 400px) 100vw, 400px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The game has three different environments corresponding each company. Cargotec part of the game takes place in terminal area, John Deere in forest and Sandvik in openpit and underground mine. The team included three members. My job was to create most of the graphics and program part of the game. Game was developed in Unity3d. Unfortunately because of the game was done for internal use of the companies, a playable version isn’t publicly available.&lt;/p&gt;
+&lt;p&gt;More information about our progress and about the project can be found at&lt;a href=&quot;http://tampere.demola.fi/node/5251&quot;&gt; Demola website where our team &lt;/a&gt;published blog posts about the progress during the project.&lt;/p&gt;
+
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/KToiD-MlLxw&quot; frameborder=&quot;0&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+**My Part**:&amp;#xA0;Concept, Graphics, Additional Programming
+          &lt;/div&gt;
+          
+&lt;p&gt;&lt;strong&gt;The Team&lt;/strong&gt;:
+&lt;a href=&quot;http://worldspawngames.com/&quot;&gt;Lukas Kallenbach&lt;/a&gt;: Concept, Programming, Getting things done
+Joonas Kemppainen: Concept, Project Management&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Beat from Above]]></title><description><![CDATA[Beat from Above is a point & click game made in Global game jam ’13 in 48 hours at Tampere. It tells a short surreal story about a boy who…]]></description><link>https://www.tuomassalmi.com/games/beat-from-above/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/beat-from-above/</guid><pubDate>Thu, 07 Feb 2013 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Beat from Above is a point &amp;#x26; click game made in Global game jam ’13 in 48 hours at Tampere. It tells a short surreal story about a boy who wakes up in middle of the night and hears the sound of a beating heart. What is happening? Perhaps you should find out!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.kongregate.com/games/Tumetsu/beat-from-above&quot;&gt;Play on Kongregate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://globalgamejam.org/2013/beat-above&quot;&gt;Visit our GGJ-page&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Credits:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Programmer: Tuomas Salmi,”Tumetsu”&lt;/li&gt;
+&lt;li&gt;Leading graphic artist: &lt;a href=&quot;http://caratra.com/&quot; title=&quot;Eeva Andrejeff portfolio&quot;&gt;Eeva Andrejeff ,”caratra”&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Graphic artist: Anna Diaz-Tillman ,”dennae”&lt;/li&gt;
+&lt;li&gt;Programmer, “Johnny-on-the-spot”: Tomi Urama, “Tompsay”&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[For the Medicine]]></title><description><![CDATA[For the Medicine is a small RPG where battles work by using magical cards. The challenge is to design a good deck against each of the unique…]]></description><link>https://www.tuomassalmi.com/games/for-the-medicine/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/for-the-medicine/</guid><pubDate>Thu, 07 Feb 2013 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;For the Medicine is a small RPG where battles work by using magical cards. The challenge is to design a good deck against each of the unique enemies. In battle you have to use your cards wisely to attack and defend against the enemy attacks.&lt;/p&gt;
+&lt;p&gt;The game was started at summer 2011. At the moment it is on hold until I decide what to do with it. I might  restart it and build it for mobile devices in future.&lt;/p&gt;
+&lt;p&gt;I decided to put the demo out. Because the game is old and I didn’t want to touch the code too much, it is really rough so before playing &lt;strong&gt;please read the instructions and notes below!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;How to play:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Battle&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select enemy on the map. All enemies are available so best order is Salamander – Mossmuncher – Lanterking – others&lt;/li&gt;
+&lt;li&gt;In battle, select cards you want to use. If you use multiple cards of same color or which have same numbers, or numbers form ascending or descending order, you get bonus damage which is shown in left bar.&lt;/li&gt;
+&lt;li&gt;When enemy attacks, you have few seconds time to pick defensive card. Gray cards can be picked, but they don’t protect you.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Deck customising&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;span style=&quot;line-height: 13px;&quot;&gt;Before battle read enemy descriptions to get tips of which cards you should select.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Open deck editor from button in map.&lt;/li&gt;
+&lt;li&gt;Your deck can hold 15 cards. And menu shows all your different cards. Numbers show how many cards you have in your deck and how much of them you have. Check third screenshot.&lt;/li&gt;
+&lt;li&gt;Press any card to get into sub-menu where you can add or remove cards from your deck.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;/ftm/index.html&quot;&gt;Play demo here&lt;/a&gt; (no preloader so wait a bit, it’s about 5Mb big)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 640px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/1bedffcb7f96719595db35c454dfa9e8/a43b8/ftm1.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAECAwT/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAABhVhaMRH/xAAZEAACAwEAAAAAAAAAAAAAAAAAAQIDERL/2gAIAQEAAQUColHLHLXZJCeHRp//xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAgBAwEBPwGI/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAIAQIBAT8Bqv/EABoQAAICAwAAAAAAAAAAAAAAAAABESESIDL/2gAIAQEABj8CsxmmdPT/xAAaEAEAAwEBAQAAAAAAAAAAAAABABEhQWGx/9oACAEBAAE/IcW1+EMqHQXkQohxRxKAV8n/2gAMAwEAAgADAAAAEMT/AP/EABcRAQADAAAAAAAAAAAAAAAAAAABESH/2gAIAQMBAT8QjSj/xAAWEQEBAQAAAAAAAAAAAAAAAAAAETH/2gAIAQIBAT8Qwp//xAAbEAACAwEBAQAAAAAAAAAAAAABEQAhMWFBUf/aAAgBAQABPxANMNtj5s+OtAU8uGIYdjBLAmnClDdKAUTHbT//2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;salamander&quot;
+        title=&quot;salamander&quot;
+        src=&quot;/static/1bedffcb7f96719595db35c454dfa9e8/a43b8/ftm1.jpg&quot;
+        srcset=&quot;/static/1bedffcb7f96719595db35c454dfa9e8/e33f8/ftm1.jpg 293w,
+/static/1bedffcb7f96719595db35c454dfa9e8/d5ce0/ftm1.jpg 585w,
+/static/1bedffcb7f96719595db35c454dfa9e8/a43b8/ftm1.jpg 640w&quot;
+        sizes=&quot;(max-width: 640px) 100vw, 640px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 641px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/c0ba308b457d51451ca85febf7c85ec8/c784b/ftm2.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 74.72698907956318%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBf/EABYBAQEBAAAAAAAAAAAAAAAAAAEAAv/aAAwDAQACEAMQAAAB4iuZJKm//8QAFxAAAwEAAAAAAAAAAAAAAAAAAAEhEf/aAAgBAQABBQLRV6yEIf/EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEABj8CX//EABkQAAMBAQEAAAAAAAAAAAAAAAABESExUf/aAAgBAQABPyFuypEsp5McpIWn/9oADAMBAAIAAwAAABAf3//EABYRAQEBAAAAAAAAAAAAAAAAAAARAf/aAAgBAwEBPxCJj//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oACAECAQE/EFf/xAAcEAEAAwACAwAAAAAAAAAAAAABABEhMUFhkfD/2gAIAQEAAT8Q7L0QGDr2zilRnMQJRq9LnKsP3iUaHNyf/9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;forest&quot;
+        title=&quot;forest&quot;
+        src=&quot;/static/c0ba308b457d51451ca85febf7c85ec8/c784b/ftm2.jpg&quot;
+        srcset=&quot;/static/c0ba308b457d51451ca85febf7c85ec8/e33f8/ftm2.jpg 293w,
+/static/c0ba308b457d51451ca85febf7c85ec8/d5ce0/ftm2.jpg 585w,
+/static/c0ba308b457d51451ca85febf7c85ec8/c784b/ftm2.jpg 641w&quot;
+        sizes=&quot;(max-width: 641px) 100vw, 641px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 640px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/4457aea15f3b819b949bdb83721cbe03/a43b8/ftm3.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAWAQEBAQAAAAAAAAAAAAAAAAACAAH/2gAMAwEAAhADEAAAAYz11wsEEv/EABwQAAICAgMAAAAAAAAAAAAAAAIDAAEEERIhIv/aAAgBAQABBQK8yMawrYRct936han/xAAVEQEBAAAAAAAAAAAAAAAAAAABEP/aAAgBAwEBPwEn/8QAFREBAQAAAAAAAAAAAAAAAAAAEBH/2gAIAQIBAT8Bp//EABsQAAICAwEAAAAAAAAAAAAAAAAhARECAxBx/9oACAEBAAY/AlrkuUPKvBd//8QAGhABAAMBAQEAAAAAAAAAAAAAAQARIUExYf/aAAgBAQABPyEfLX1l8HoDkV64BrI6uIurlLW4T//aAAwDAQACAAMAAAAQNO//xAAVEQEBAAAAAAAAAAAAAAAAAAABEP/aAAgBAwEBPxBE/8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAECAQE/ELK//8QAGhABAAMBAQEAAAAAAAAAAAAAAQARITGRwf/aAAgBAQABPxAzo3gnyH9zoFJV7lBlZj4wywt2pU3QztspyOgsTfSf/9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;worldmap&quot;
+        title=&quot;worldmap&quot;
+        src=&quot;/static/4457aea15f3b819b949bdb83721cbe03/a43b8/ftm3.jpg&quot;
+        srcset=&quot;/static/4457aea15f3b819b949bdb83721cbe03/e33f8/ftm3.jpg 293w,
+/static/4457aea15f3b819b949bdb83721cbe03/d5ce0/ftm3.jpg 585w,
+/static/4457aea15f3b819b949bdb83721cbe03/a43b8/ftm3.jpg 640w&quot;
+        sizes=&quot;(max-width: 640px) 100vw, 640px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[The North, Pohjola]]></title><description><![CDATA[The North, Pohjola was made in 2007 for YoYo Games’ Winter Competition. In game you take a role of demigod with access to magical…]]></description><link>https://www.tuomassalmi.com/games/the-north-pohjola/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/the-north-pohjola/</guid><pubDate>Tue, 05 Feb 2013 11:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The North, Pohjola was made in 2007 for YoYo Games’ Winter Competition. In game you take a role of demigod with access to magical wintercards. With these cards you have to guide your tribe through long and cold winter and emerge victorious through several hardships. Build your own deck and challenge the winter’s might and pursue the highest score in online highscore tables. &lt;span style=&quot;font-size: 13px; line-height: 19px;&quot;&gt;Only for Windows.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/thenorthv101.zip&quot;&gt;Download 9.8 MB&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://winterofnorth.awardspace.com/highscore.php&quot;&gt;Top 20 high-scores&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://winterofnorth.awardspace.com/allhighscore.php&quot;&gt;All high-scores&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 800px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/b95f383957cee3db1f57d3283a0f78cb/0ae04/northsnap1.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAIEAQX/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAG530JDpi//xAAbEAADAAIDAAAAAAAAAAAAAAAAAQIDBBESFP/aAAgBAQABBQJa+NzWCGeNMU8HcR//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAVEQEBAAAAAAAAAAAAAAAAAAAQMf/aAAgBAgEBPwGH/8QAHBAAAQQDAQAAAAAAAAAAAAAAAQAQESECMTJx/9oACAEBAAY/AhAv1XIXWTaLf//EABsQAAIDAQEBAAAAAAAAAAAAAAERACExQVGR/9oACAEBAAE/IQYn0IGi0MvIdBPkEiF9iC3M9MNg0kVP/9oADAMBAAIAAwAAABDoz//EABURAQEAAAAAAAAAAAAAAAAAAAEQ/9oACAEDAQE/EBGf/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERUf/aAAgBAgEBPxCdLf/EABwQAAICAwEBAAAAAAAAAAAAAAERADEhUXGB0f/aAAgBAQABPxAlAWcg+xmLALt1ERMbfxB5IqTscjpAkBVLQxq4EAIInJ//2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;northsnap1&quot;
+        title=&quot;northsnap1&quot;
+        src=&quot;/static/b95f383957cee3db1f57d3283a0f78cb/0ae04/northsnap1.jpg&quot;
+        srcset=&quot;/static/b95f383957cee3db1f57d3283a0f78cb/e33f8/northsnap1.jpg 293w,
+/static/b95f383957cee3db1f57d3283a0f78cb/d5ce0/northsnap1.jpg 585w,
+/static/b95f383957cee3db1f57d3283a0f78cb/0ae04/northsnap1.jpg 800w&quot;
+        sizes=&quot;(max-width: 800px) 100vw, 800px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 800px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/bd20aef0164296b7b16f79546921d4d5/0ae04/northsnap3.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIBAwX/xAAWAQEBAQAAAAAAAAAAAAAAAAABAgP/2gAMAwEAAhADEAAAAdSWWs7QB//EABoQAAIDAQEAAAAAAAAAAAAAAAABAhIxESH/2gAIAQEAAQUCsN8I+qppDP/EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABURAQEAAAAAAAAAAAAAAAAAABAh/9oACAECAQE/Aaf/xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAaEAACAwEBAAAAAAAAAAAAAAAAAREhUUGx/9oACAEBAAE/IZzo16HsdWR1j6PQ/9oADAMBAAIAAwAAABDAP//EABcRAAMBAAAAAAAAAAAAAAAAAAABETH/2gAIAQMBAT8QcqFh/8QAFhEBAQEAAAAAAAAAAAAAAAAAARAh/9oACAECAQE/EDDP/8QAGRABAQEBAQEAAAAAAAAAAAAAAREAIUEx/9oACAEBAAE/EBmI9RxEMp5rKKrnzKtKLd2g+HuBdY15v//Z&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;northsnap3&quot;
+        title=&quot;northsnap3&quot;
+        src=&quot;/static/bd20aef0164296b7b16f79546921d4d5/0ae04/northsnap3.jpg&quot;
+        srcset=&quot;/static/bd20aef0164296b7b16f79546921d4d5/e33f8/northsnap3.jpg 293w,
+/static/bd20aef0164296b7b16f79546921d4d5/d5ce0/northsnap3.jpg 585w,
+/static/bd20aef0164296b7b16f79546921d4d5/0ae04/northsnap3.jpg 800w&quot;
+        sizes=&quot;(max-width: 800px) 100vw, 800px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Quick colors]]></title><description><![CDATA[Quickcolors is a very simple Flashgame I made in few hours one evening when I was really bored. In the game you have to click colored blocks…]]></description><link>https://www.tuomassalmi.com/games/quick-colors/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/quick-colors/</guid><pubDate>Tue, 05 Feb 2013 10:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Quickcolors is a very simple Flashgame I made in few hours one evening when I was really bored. In the game you have to click colored blocks to make asked color. For example if you are asked to make orange, you have to click red and yellow blocks. Oh, and of course those blocks are moving with high speed. Game also contains some obnoxious sound effects so be prepared! Because of some feedback I have been thinking revising the color mixing concept in future possibly for a mobile game. It is still completely open topic though.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.kongregate.com/games/Tumetsu/quick-colors&quot;&gt;You can play game on Kongregate&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Skyhunter]]></title><description><![CDATA[Skyhunter is my first completed Flash game made with Chevyray’s Flashpunk library, made originally in 2011. It was mostly a exercise project…]]></description><link>https://www.tuomassalmi.com/games/skyhunter/</link><guid isPermaLink="false">https://www.tuomassalmi.com/games/skyhunter/</guid><pubDate>Mon, 03 Dec 2012 07:03:47 GMT</pubDate><content:encoded>&lt;p&gt;Skyhunter is my first completed Flash game made with Chevyray’s Flashpunk library, made originally in 2011. It was mostly a exercise project, so do not expect anything too fancy! However, it should be worth of couple of plays and sure teached me a lot about Flash and Actionscript&lt;/p&gt;
+&lt;p&gt;Fly with Perche Le Pascal through the skies and shoot down everything which comes by, at the same time avoiding everything which could break your balloons.&lt;/p&gt;
+&lt;h4&gt;&lt;a href=&quot;http://www.kongregate.com/games/Tumetsu/skyhunter&quot; title=&quot;Play Skyhunter&quot;&gt;Play on Kongregate&lt;/a&gt;&lt;/h4&gt;</content:encoded></item></channel></rss>
